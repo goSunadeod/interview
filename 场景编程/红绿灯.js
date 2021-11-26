@@ -14,7 +14,7 @@ const task = (light, timer) => {
   })
 }
 
-const taskLoop = async () => {
+const taskLoop = () => {
   // promise方案
   task('red', 3000)
     .then(() => task('yellow', 2000))

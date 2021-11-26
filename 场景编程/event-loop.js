@@ -30,44 +30,5 @@ process.nextTick(function () {
 console.log(8)
 
 
+// 3 4 6 8 7 5 2 1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 微任务：nextTick比then优先级高      宏任务：setTimeout优先级比setImmediate高
-// process.nextTick > promise.then  >  setTimeout > setImmediate
-// 注意await也是promise 但是需要一个个promise添加进去 所以同一个await里面的promise的顺序可能被其他的promise插队
-// 解析：https://www.jianshu.com/p/a39d3e878d06
-// 答案：3 4 6 8 7 5 2 1

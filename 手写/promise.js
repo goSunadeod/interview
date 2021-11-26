@@ -137,3 +137,24 @@ new MyPromise((resolve, reject) => {
 }, error => {
   console.log(error);
 })
+
+
+// promisify
+function promisify(fn) {
+  return function(...args) {
+    // 返回promise的实例
+    return new Promise(function(resolve, reject) {
+      // newFn(a) 时会执行到这里向下执行
+      // 加入参数cb => newFn(a)
+      args.push(function(err, data) {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(data)
+        }
+      })
+      // 这里才是函数真正执行的地方执行newFn(a, cb)
+      fn.apply(null, args)
+    })
+  }
+}

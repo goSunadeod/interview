@@ -40,73 +40,33 @@ function flattenObj(obj) {
 
 
 
-
-
-
-
-
-
-
-
-
-// 答案慎看
-// 答案慎看
-// 答案慎看
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function flattenObj(obj) {
-//     let res = {}
-//     // 对一个对象扁平化
-//     const help = (target, oldKey) => {
-//         for (let key in target) {
-//             let newKey; // 判断老的key
-//             if (oldKey) {
-//                 // 递归有老key 则组合起来
-//                 if (Array.isArray(target)) {
-//                     // 数组变为 老key[0]
-//                     newKey = `${oldKey}[${key}]`
-//                 } else {
-//                     // 对象： 老key.a
-//                     newKey = `${oldKey}.${key}`
-//                 }
-//             } else {
-//                 // 初始化情况下
-//                 if (Array.isArray(target)) {
-//                     // 数组变为 [0] [1]
-//                     newKey = `[${key}]`
-//                 } else {
-//                     // 对象变为 'a' 'b'
-//                     newKey = key
-//                 }
-//             }
-//             if (Object.prototype.toString.call(target[key]) === '[object Object]' || Array.isArray(target[key])) {
-//                 // 递归数组和对象 传进组织好的老key
-//                 help(target[key], newKey)
-//             } else if (target[key] !== null && target[key] !== undefined) {
-//                 // 递归出口 常规数据 直接赋值
-//                 res[newKey] = target[key]
-//             }
-//         }
-//     }
-//     help(obj, '')
-//     return res
-// }
+function isObject (obj) {
+    return obj !== null && typeof obj === 'object'
+  }
+function flatten (obj, path = '') {
+    const keys = Object.keys(obj)
+    if (keys.length === 0) return {}
+    let pathKey
+    let res = {}
+    keys.forEach(key => {
+      let curr = res
+      const val = obj[key]
+      pathKey = path ? `${path}.${key}` : key
+      if (Array.isArray(val)) {
+        val.forEach((item, index) => {
+          pathKey = path ? `${path}[${index}]` : `${key}[${index}]`
+          if (isObject(item)) {
+            res = Object.assign({}, res, flatten(item, pathKey))
+          } else {
+            res[pathKey] = item
+          }
+        })
+      } else if (isObject(val)) {
+        res = Object.assign({}, res, flatten(val, key))
+      } else {
+        res[pathKey] = val
+      }
+    })
+    return res
+  }
+  console.log(flatten(obj))

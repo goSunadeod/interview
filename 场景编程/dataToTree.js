@@ -120,70 +120,6 @@ function toTree(arr) {
 
 
 
-
-
-
-
-
-
-
-// 答案慎看
-
-
-// 蚂蚁金服-保险一面
-
-// function convert2(list, parentKey, currentKey, rootValue) {
-//     // 数据结构初始化
-//     let obj = {
-//         [currentKey]: rootValue,
-//         children: []
-//     }
-//     let num = 0
-
-//     // 为所有节点 添加到父结构中
-//     while (num !== list.length) {
-//         list.forEach((item, index) => {
-//             if (!item) return
-//             // 收集最外层 
-//             if (item[parentKey] === obj[currentKey]) {
-//                 obj.children.push({
-//                     ...item,
-//                     children: []
-//                 })
-//                 list[index] = null
-//                 num++
-//             } else {
-//                 // 递归找层级
-//                 helpFn(item, index, obj.children)
-//             }
-//             // 递归找层级
-//         })
-//     }
-//     // 为item 添加层级       
-//     function helpFn(item, initIndex, arr) {
-//         // 寻找当前层级
-//         let index = arr.findIndex(ele => ele[currentKey] === item[parentKey])
-//         if (index !== -1) {
-//             arr[index].children.push({
-//                 ...item,
-//                 children: []
-//             })
-//             list[initIndex] = null
-//             num++
-//             return true
-//         }
-//         // 找他们的子级的元素
-//         for (let ele of arr.values()) {
-//             if (helpFn(item, index, ele.children)) {
-//                 // 找到该item的层级 取消递归
-//                 return true
-//             }
-//         }
-//     }
-//     return obj
-// }
-
-
 // 微盟一面
 
 // 循环
@@ -238,3 +174,22 @@ function checkoutArr(oldArr) {
     });
     return newArr
 }
+
+
+// map
+function array2Tree(arr) {
+    const map = new Map()
+    const tree = []
+    for (const item of arr) {
+      item.children = []
+      map.set(item.id, item)
+    }
+    for (const item of arr) {
+      if (item.parent !== '0') {
+        map.get(item.parent).children.push(item)
+      } else {
+        tree.push(item)
+      }
+    }
+    return tree
+  }

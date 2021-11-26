@@ -15,3 +15,23 @@ function deepClone(obj, hash = new WeakMap()) {
   }
   return copy
 }
+
+
+
+function isObject (obj) {
+  return (typeof obj === 'object') && obj !== null
+}
+function deepClone (obj) {
+  if (!isObject(obj)) {
+    return
+  }
+  const isArray = Array.isArray(obj)
+  const newObj = isArray ? [] : {}
+  for (let key in target) {
+    if (target.hasOwnProperty(key)) {
+    const value = obj[key]
+    newObj[key] = isObject(value) ? deepClone(value) : value    
+  } 
+  }
+  return newObj
+}
